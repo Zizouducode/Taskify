@@ -26,7 +26,7 @@ type Actions =
       payload: any;
     };
 
-//Reducer
+//Create Reducer
 const TodoReducer = (state: Todo[], action: Actions) => {
   switch (action.type) {
     case "add":
