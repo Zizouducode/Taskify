@@ -8,15 +8,15 @@ import SingleTodo from "./SingleTodo";
 
 //Props typing
 interface Props {
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  state: Todo[];
+  dispatch: React.Dispatch<any>;
 }
 
-const TodoList: React.FC<Props> = ({ todos, setTodos }: Props) => {
+const TodoList: React.FC<Props> = ({ state, dispatch }: Props) => {
   return (
     <div>
-      {todos.map((todo) => (
-        <SingleTodo todo={todo} setTodos={setTodos} key={todo.id} />
+      {state.map((todo) => (
+        <SingleTodo todo={todo} key={todo.id} dispatch={dispatch} />
       ))}
     </div>
   );

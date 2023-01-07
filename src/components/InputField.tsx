@@ -1,19 +1,27 @@
 import React from "react";
+import { useState } from "react";
 
 interface Props {
-  todo: string;
-  setTodo: React.Dispatch<React.SetStateAction<string>>;
-  handleAddTodo: (e: React.FormEvent) => void;
+  dispatch: React.Dispatch<any>;
 }
 
-const InputField = ({ todo, setTodo, handleAddTodo }: Props) => {
+const InputField = ({ dispatch }: Props) => {
+  const [todo, setTodo] = useState<string>("");
+  //Functions
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodo(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    dispatch({ type: "add", payload: { todo: todo, e: e } });
+    setTodo("");
   };
   return (
     <form
       className="relative m-auto flex w-11/12 items-center justify-center"
-      onSubmit={handleAddTodo}
+      onSubmit={(e) => {
+        handleSubmit(e);
+      }}
     >
       <input
         className="w-full rounded-full border-none px-8 py-5  text-2xl outline-green-600 duration-200"
