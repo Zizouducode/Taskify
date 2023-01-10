@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import { Draggable } from "react-beautiful-dnd";
 
 //Incons
 import { AiFillDelete, AiOutlineEdit } from "react-icons/ai";
@@ -10,11 +11,11 @@ import { Todo } from "../models/todo";
 //Props typing
 interface Props {
   todo: Todo;
-
   dispatch: React.Dispatch<any>;
+  index: number;
 }
 
-const SingleTodo: React.FC<Props> = ({ todo, dispatch }) => {
+const SingleTodo: React.FC<Props> = ({ todo, dispatch, index }) => {
   //States and variables
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [editTodo, setEditTodo] = useState<string>(todo.todo);
@@ -41,43 +42,50 @@ const SingleTodo: React.FC<Props> = ({ todo, dispatch }) => {
   }, [isDisabled]);
 
   return (
-    <form
-      className="m-5 flex h-36 w-6/12 justify-between bg-slate-300 p-8"
-      onSubmit={(e) => {
-        handleEdit(e, todo.id);
-      }}
-    >
-      <input
-        className={todo.isDone ? "line-through" : "none"}
-        type="text"
-        ref={inputRef}
-        disabled={isDisabled}
-        value={editTodo}
-        onChange={(e) => {
-          handleChange(e, todo.id);
-        }}
-      />
-      <div className="flex  gap-5 text-lg">
-        <span className="cursor-pointer">
-          <AiOutlineEdit onClick={(e) => handleEdit(e, todo.id)} />
-        </span>
-        <span className="cursor-pointer">
-          <AiFillDelete
-            onClick={() => {
-              dispatch({ type: "remove", payload: todo.id });
+    <Draggable draggableId={todo.id.toString()} index={index}>
+      {(provided) => (
+        <form
+          className="duration-0 m-5 flex  h-36 justify-between bg-slate-300 p-8 transition duration-300 hover:scale-110 "
+          onSubmit={(e) => {
+            handleEdit(e, todo.id);
+          }}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <input
+            className={todo.isDone ? "line-through " : "none"}
+            type="text"
+            ref={inputRef}
+            disabled={isDisabled}
+            value={editTodo}
+            onChange={(e) => {
+              handleChange(e, todo.id);
             }}
           />
-        </span>
-        <span
-          className="cursor-pointer"
-          onClick={() => {
-            dispatch({ type: "done", payload: todo.id });
-          }}
-        >
-          <MdDone />
-        </span>
-      </div>
-    </form>
+          <div className="flex  gap-5 text-lg">
+            <span className="cursor-pointer">
+              <AiOutlineEdit onClick={(e) => handleEdit(e, todo.id)} />
+            </span>
+            <span className="cursor-pointer">
+              <AiFillDelete
+                onClick={() => {
+                  dispatch({ type: "remove", payload: todo.id });
+                }}
+              />
+            </span>
+            <span
+              className="cursor-pointer"
+              onClick={() => {
+                dispatch({ type: "done", payload: todo.id });
+              }}
+            >
+              <MdDone />
+            </span>
+          </div>
+        </form>
+      )}
+    </Draggable>
   );
 };
 
