@@ -45,7 +45,6 @@ const SingleTodo: React.FC<Props> = ({ todo, dispatch, index }) => {
     <Draggable draggableId={todo.id.toString()} index={index}>
       {(provided) => (
         <form
-          className="duration-0 rad m-2 flex h-24 items-start justify-between rounded-lg bg-light-white p-8 drop-shadow-md transition duration-300 hover:scale-110 "
           onSubmit={(e) => {
             handleEdit(e, todo.id);
           }}
@@ -54,35 +53,37 @@ const SingleTodo: React.FC<Props> = ({ todo, dispatch, index }) => {
           ref={provided.innerRef}
           key={index}
         >
-          <input
-            className={todo.isDone ? "line-through " : "none"}
-            type="text"
-            ref={inputRef}
-            disabled={isDisabled}
-            value={editTodo}
-            onChange={(e) => {
-              handleChange(e, todo.id);
-            }}
-          />
-          <div className="flex  gap-5 text-lg">
-            <span className="cursor-pointer">
-              <AiOutlineEdit onClick={(e) => handleEdit(e, todo.id)} />
-            </span>
-            <span className="cursor-pointer">
-              <AiFillDelete
-                onClick={() => {
-                  dispatch({ type: "remove", payload: todo.id });
-                }}
-              />
-            </span>
-            <span
-              className="cursor-pointer"
-              onClick={() => {
-                dispatch({ type: "done", payload: todo.id });
+          <div className="  m-2 flex h-24 items-start rounded-lg bg-light-white p-8 drop-shadow-md transition duration-300 hover:scale-110 ">
+            <input
+              className={todo.isDone ? " line-through" : "none"}
+              type="text"
+              ref={inputRef}
+              disabled={isDisabled}
+              value={editTodo}
+              onChange={(e) => {
+                handleChange(e, todo.id);
               }}
-            >
-              <MdDone />
-            </span>
+            />
+            <div className="flex  gap-1.5 text-lg">
+              <span className="cursor-pointer">
+                <AiOutlineEdit onClick={(e) => handleEdit(e, todo.id)} />
+              </span>
+              <span className="cursor-pointer">
+                <AiFillDelete
+                  onClick={() => {
+                    dispatch({ type: "remove", payload: todo.id });
+                  }}
+                />
+              </span>
+              <span
+                className="cursor-pointer"
+                onClick={() => {
+                  dispatch({ type: "done", payload: todo.id });
+                }}
+              >
+                <MdDone />
+              </span>
+            </div>
           </div>
         </form>
       )}

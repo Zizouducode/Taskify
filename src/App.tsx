@@ -109,10 +109,10 @@ const App: React.FC = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="w-full bg-[url('./assets/img/bg-img.webp')]">
         <div className="m-auto h-screen max-w-5xl justify-center  p-1">
-          <h1 className="text-white mb-5 mt-5 text-3xl font-bold">
+          <h1 className="mb-5 mt-5 text-3xl font-bold text-white">
             My Todo List
           </h1>
-          <InputField dispatch={dispatch} />
+          {/* <InputField dispatch={dispatch} /> */}
           <TodoList
             state={state}
             dispatch={dispatch}

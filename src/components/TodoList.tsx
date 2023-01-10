@@ -26,7 +26,7 @@ const TodoList: React.FC<Props> = ({
       <Droppable droppableId="TodosList">
         {(provided) => (
           <div
-            className="mt-5 flex  min-h-[50]  w-6/12 flex-col justify-between rounded bg-light-grey p-5"
+            className="mt-5 flex  min-h-[50]  w-4/12 flex-col justify-between rounded bg-light-grey p-5"
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
@@ -41,7 +41,7 @@ const TodoList: React.FC<Props> = ({
             ))}
             {provided.placeholder}
             <span
-              className="w-6/12  cursor-pointer text-blue hover:bg-white"
+              className="mt-5 w-6/12 cursor-pointer text-blue hover:bg-white"
               onClick={(e) => {
                 dispatch({ type: "add", payload: { e: e, todo: "" } });
               }}
@@ -54,7 +54,7 @@ const TodoList: React.FC<Props> = ({
       <Droppable droppableId="RemoveList">
         {(provided) => (
           <div
-            className="mt-5 flex  min-h-[50]  w-6/12 flex-col rounded bg-light-grey p-5"
+            className="mt-5 flex  min-h-[50]  w-4/12 flex-col rounded bg-light-grey p-5"
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
