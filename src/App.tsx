@@ -25,6 +25,10 @@ type Actions =
   | {
       type: "edit";
       payload: any;
+    }
+  | {
+      type: "drag";
+      payload: any;
     };
 
 //Create Reducer
@@ -49,6 +53,14 @@ const TodoReducer = (state: Todo[], action: Actions) => {
           ? { ...todo, todo: action.payload.editTodo }
           : todo;
       });
+    case "drag":
+      return (
+        console.log("action.payload=>", action.payload),
+        [
+          ...state,
+          { id: action.payload.id, todo: action.payload.todo, isDone: true },
+        ]
+      );
     default:
       return state;
   }
@@ -80,29 +92,34 @@ const App: React.FC = () => {
       active.splice(source.index, 1);
     } else {
       add = complete[source.index];
-      active.splice(source.index, 1);
+      complete.splice(source.index, 1);
     }
 
     if (destination.droppableId === "TodosList") {
+      add.isDone = false;
       active.splice(destination.index, 0, add);
     } else {
+      add.isDone = true;
       complete.splice(destination.index, 0, add);
     }
     setCompletedTodos(complete);
   };
 
-  console.log("state=>", state);
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="m-auto h-screen max-w-5xl justify-center bg-green-300 p-1">
-        <h1 className="mb-5 text-center text-3xl font-bold">Taskify</h1>
-        <InputField dispatch={dispatch} />
-        <TodoList
-          state={state}
-          dispatch={dispatch}
-          completedTodos={completedTodos}
-          setCompletedTodos={setCompletedTodos}
-        />
+      <div className="w-full bg-[url('./assets/img/bg-img.webp')]">
+        <div className="m-auto h-screen max-w-5xl justify-center  p-1">
+          <h1 className="text-white mb-5 mt-5 text-3xl font-bold">
+            My Todo List
+          </h1>
+          <InputField dispatch={dispatch} />
+          <TodoList
+            state={state}
+            dispatch={dispatch}
+            completedTodos={completedTodos}
+            setCompletedTodos={setCompletedTodos}
+          />
+        </div>
       </div>
     </DragDropContext>
   );

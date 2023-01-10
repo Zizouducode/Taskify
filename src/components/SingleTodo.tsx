@@ -45,13 +45,14 @@ const SingleTodo: React.FC<Props> = ({ todo, dispatch, index }) => {
     <Draggable draggableId={todo.id.toString()} index={index}>
       {(provided) => (
         <form
-          className="duration-0 m-5 flex  h-36 justify-between bg-slate-300 p-8 transition duration-300 hover:scale-110 "
+          className="duration-0 rad m-2 flex h-24 items-start justify-between rounded-lg bg-light-white p-8 drop-shadow-md transition duration-300 hover:scale-110 "
           onSubmit={(e) => {
             handleEdit(e, todo.id);
           }}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          key={index}
         >
           <input
             className={todo.isDone ? "line-through " : "none"}
